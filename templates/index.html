@@ -6,12 +6,15 @@
     <title>Boston Housing Price Prediction | ML Model</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #5B9DF9;
-            --secondary: #1F2937;
-            --success: #10B981;
-            --danger: #EF4444;
+            --kaggle-blue: #20BEFF;
+            --kaggle-dark: #202124;
+            --kaggle-bg: #F3F6F8;
+            --kaggle-border: #E0E4E8;
+            --doodle-black: #111111;
         }
 
         * {
@@ -21,503 +24,379 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--kaggle-bg);
+            color: var(--kaggle-dark);
             min-height: 100vh;
         }
 
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+        /* Kaggle-style Clean Cards */
+        .kaggle-card {
+            background: #FFFFFF;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-        }
-
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(31, 38, 135, 0.25);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #5B9DF9 0%, #4B7FDB 100%);
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
+            border: 1px solid var(--kaggle-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             transition: all 0.3s ease;
+        }
+
+        .kaggle-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Doodle Buttons */
+        .doodle-btn {
+            background-color: var(--kaggle-blue);
+            color: white;
+            border: 3px solid var(--doodle-black);
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-family: 'Fuzzy Bubbles', cursive;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
+            /* The Doodle offset shadow */
+            box-shadow: 5px 5px 0px var(--doodle-black);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(91, 157, 249, 0.4);
+        .doodle-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 3px 3px 0px var(--doodle-black);
+            background-color: #1aa5e6;
         }
 
-        .btn-primary:active {
-            transform: translateY(0);
+        .doodle-btn:active {
+            transform: translate(5px, 5px);
+            box-shadow: 0px 0px 0px var(--doodle-black);
         }
 
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+        .doodle-btn-secondary {
+            background-color: #FFF;
+            color: var(--doodle-black);
+        }
+        
+        .doodle-btn-secondary:hover {
+            background-color: #F3F6F8;
         }
 
+        /* Kaggle-style Inputs */
         .input-field {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid #E5E7EB;
+            border: 2px solid var(--kaggle-border);
             border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: #F9FAFB;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            background: #FAFAFA;
+            font-family: 'Inter', sans-serif;
         }
 
         .input-field:focus {
             outline: none;
-            border-color: #5B9DF9;
+            border-color: var(--kaggle-blue);
             background: white;
-            box-shadow: 0 0 0 3px rgba(91, 157, 249, 0.1);
+            box-shadow: 0 0 0 4px rgba(32, 190, 255, 0.1);
         }
 
         .input-field::placeholder {
-            color: #9CA3AF;
+            color: #A0AAB2;
         }
 
-        .badge {
+        /* Doodle Badge */
+        .doodle-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 12px;
-            background: rgba(91, 157, 249, 0.1);
-            color: #5B9DF9;
+            padding: 6px 14px;
+            background: #FFD54F;
+            color: var(--doodle-black);
+            border: 2px solid var(--doodle-black);
             border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-family: 'Fuzzy Bubbles', cursive;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 3px 3px 0px var(--doodle-black);
+            transform: rotate(-2deg);
         }
 
-        .error-message {
-            background: #FEE2E2;
-            color: #991B1B;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border-left: 4px solid #EF4444;
-            margin-bottom: 16px;
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .success-message {
-            background: #DCFCE7;
-            color: #166534;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border-left: 4px solid #10B981;
-            margin-bottom: 16px;
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .spinner {
+        /* Doodle Image Wrapper */
+        .doodle-img-wrapper {
+            border: 4px solid var(--doodle-black);
+            border-radius: 16px;
+            box-shadow: 6px 6px 0px var(--doodle-black);
+            overflow: hidden;
             display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.8s linear infinite;
+            transform: rotate(1deg);
+            transition: transform 0.3s;
+        }
+        
+        .doodle-img-wrapper:hover {
+            transform: rotate(-1deg) scale(1.02);
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        /* Alerts */
+        .alert-box {
+            padding: 16px;
+            border-radius: 12px;
+            border: 3px solid var(--doodle-black);
+            margin-bottom: 24px;
+            display: none;
+            font-family: 'Fuzzy Bubbles', cursive;
+            font-weight: 700;
+            animation: bounceIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .error-message { background: #FFA8A8; color: #991B1B; box-shadow: 4px 4px 0px #991B1B; }
+        .success-message { background: #A8E6CF; color: #166534; box-shadow: 4px 4px 0px #166534; }
+        .alert-box.show { display: block; }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(-10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .prediction-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--kaggle-dark);
             color: white;
-            padding: 32px;
-            border-radius: 12px;
+            padding: 40px;
+            border-radius: 16px;
+            border: 4px solid var(--kaggle-blue);
             text-align: center;
-            margin-top: 24px;
+            margin-top: 32px;
             display: none;
-            animation: slideIn 0.3s ease;
+            box-shadow: 8px 8px 0px var(--kaggle-blue);
+            animation: bounceIn 0.5s ease;
         }
 
-        .prediction-box.show {
-            display: block;
-        }
+        .prediction-box.show { display: block; }
 
         .prediction-value {
-            font-size: 48px;
-            font-weight: 700;
+            font-size: 56px;
+            font-weight: 800;
             margin: 16px 0;
-            font-family: 'Courier New', monospace;
+            font-family: 'Fuzzy Bubbles', cursive;
+            color: #FFD54F;
         }
 
-        .header-gradient {
-            background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 16px;
-            border-radius: 8px;
-            color: white;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        /* Navbar */
+        .kaggle-nav {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--kaggle-border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
 
+        /* Loading */
         .loading-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
 
-        .loading-overlay.show {
-            display: flex;
-        }
+        .loading-overlay.show { display: flex; }
 
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
+        .doodle-spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #FFF;
             border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.8s linear infinite;
+            border-top-color: var(--kaggle-blue);
+            border-bottom-color: #FFD54F;
+            animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            box-shadow: 0 0 0 4px var(--doodle-black);
         }
 
-        @media (max-width: 768px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-            .prediction-value {
-                font-size: 36px;
-            }
-
-            .container {
-                padding: 16px;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header-gradient text-white py-8 shadow-lg">
+    <header class="kaggle-nav py-4 shadow-sm">
         <div class="container mx-auto px-4 md:px-6">
             <div class="flex items-center justify-between flex-wrap gap-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-chart-line text-white text-lg"></i>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center transform rotate-12 border-2 border-black shadow-[2px_2px_0px_#20BEFF]">
+                        <i class="fas fa-chart-line text-[#20BEFF] text-xl"></i>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold">Boston Housing</h1>
-                        <p class="text-xs opacity-75">Price Prediction Model</p>
+                        <h1 class="text-2xl font-bold tracking-tight text-gray-900">Boston Housing</h1>
+                        <p class="text-sm font-medium text-gray-500">Price Prediction Model</p>
                     </div>
                 </div>
-                <span class="badge" style="background: rgba(255,255,255,0.2); color: white;">
-                    <i class="fas fa-bolt"></i> ML Powered
+                <span class="doodle-badge">
+                    <i class="fas fa-robot"></i> ML Powered
                 </span>
             </div>
         </div>
     </header>
 
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="text-center">
-            <div class="loading-spinner"></div>
-            <p class="text-white mt-4 font-semibold">Predicting...</p>
+    <div class="container mx-auto px-4 mt-8 text-center">
+        <div class="doodle-img-wrapper">
+            <img src="https://cataas.com/cat/says/Waiting%20for%20the%20ML%20model%20to%20train...?!fontSize=30&fontColor=white" 
+                 alt="Programming Cat Meme" 
+                 class="w-full max-w-md h-auto object-cover block">
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 md:px-6 py-12">
-        <!-- Stats Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="stat-card">
-                <div class="stat-number">13</div>
-                <div class="stat-label">Features</div>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="text-center">
+            <div class="doodle-spinner mx-auto"></div>
+            <p class="text-black mt-6 font-bold text-xl" style="font-family: 'Fuzzy Bubbles', cursive;">Crunching Numbers...</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 md:px-6 py-8">
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="kaggle-card p-6 text-center border-t-4 border-t-[#20BEFF]">
+                <div class="text-4xl font-bold text-gray-900 mb-1" style="font-family: 'Fuzzy Bubbles', cursive;">13</div>
+                <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Features</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">506</div>
-                <div class="stat-label">Training Samples</div>
+            <div class="kaggle-card p-6 text-center border-t-4 border-t-[#FFD54F]">
+                <div class="text-4xl font-bold text-gray-900 mb-1" style="font-family: 'Fuzzy Bubbles', cursive;">50</div>
+                <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Training Samples</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">98.2%</div>
-                <div class="stat-label">Accuracy</div>
+            <div class="kaggle-card p-6 text-center border-t-4 border-t-[#A8E6CF]">
+                <div class="text-4xl font-bold text-gray-900 mb-1" style="font-family: 'Fuzzy Bubbles', cursive;">72.2%</div>
+                <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Accuracy</div>
             </div>
         </div>
 
-        <!-- Main Card -->
-        <div class="glass-effect card-hover p-8 md:p-12">
-            <!-- Error Message -->
-            <div class="error-message" id="errorMessage">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span id="errorText"></span>
-                </div>
+        <div class="kaggle-card p-8 md:p-12 border-2 border-black shadow-[8px_8px_0px_#E0E4E8]">
+            
+            <div class="alert-box error-message" id="errorMessage">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                <span id="errorText"></span>
             </div>
 
-            <!-- Success Message -->
-            <div class="success-message" id="successMessage">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-check-circle"></i>
-                    <span id="successText">Prediction successful!</span>
-                </div>
+            <div class="alert-box success-message" id="successMessage">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span id="successText">Boom! Prediction successful!</span>
             </div>
 
-            <!-- Title -->
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">
-                    <i class="fas fa-home text-blue-500 mr-3"></i>Predict Housing Price
+            <div class="mb-10 border-b-2 border-gray-100 pb-6">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2 font-['Inter']">
+                    Predict Property Value
                 </h2>
-                <p class="text-gray-600">Enter the housing features to get an estimated price prediction</p>
+                <p class="text-gray-500 text-lg">Input the housing data below to generate an estimated price.</p>
             </div>
 
-            <!-- Form -->
-            <form id="predictionForm" class="space-y-8">
-                <!-- Section 1: Location & Building Info -->
+            <form id="predictionForm" class="space-y-10">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
-                        <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>Location & Building Information
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                        <span class="bg-blue-100 text-[#20BEFF] p-2 rounded-lg border border-blue-200"><i class="fas fa-map-marked-alt"></i></span>
+                        Location & Zoning
                     </h3>
                     <div class="features-grid">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Crime Rate (CRIM)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="0.0" step="0.01" min="0" required data-feature="CRIM">
-                            <p class="text-xs text-gray-500 mt-1">Per capita crime rate by town</p>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Crime Rate (CRIM) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 0.05" step="0.01" min="0" required data-feature="CRIM">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Residential Land Zone (ZN)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="0.0" step="0.01" min="0" required data-feature="ZN">
-                            <p class="text-xs text-gray-500 mt-1">Proportion of residential land zoned</p>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Res Land Zone (ZN) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 18.0" step="0.01" min="0" required data-feature="ZN">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Non-Retail Business Acres (INDUS)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="0.0" step="0.01" min="0" required data-feature="INDUS">
-                            <p class="text-xs text-gray-500 mt-1">Proportion of non-retail acres</p>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Non-Retail Acres (INDUS) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 2.31" step="0.01" min="0" required data-feature="INDUS">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Charles River Dummy (CHAS)
-                                <span class="text-blue-500">*</span>
-                            </label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Charles River (CHAS) <span class="text-red-500">*</span></label>
                             <select class="input-field" required data-feature="CHAS">
                                 <option value="">Select...</option>
-                                <option value="0">No (0)</option>
-                                <option value="1">Yes (1)</option>
+                                <option value="0">No Bounds (0)</option>
+                                <option value="1">Bounds River (1)</option>
                             </select>
-                            <p class="text-xs text-gray-500 mt-1">1 if bounds Charles River</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Nitric Oxide (NOX)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="0.0" step="0.01" min="0" required data-feature="NOX">
-                            <p class="text-xs text-gray-500 mt-1">Nitric oxide concentration</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Average Rooms (RM)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="6.0" step="0.1" min="0" required data-feature="RM">
-                            <p class="text-xs text-gray-500 mt-1">Average number of rooms</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Section 2: Property Details -->
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-green-500">
-                        <i class="fas fa-building text-green-500 mr-2"></i>Property Details
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                        <span class="bg-green-100 text-green-600 p-2 rounded-lg border border-green-200"><i class="fas fa-home"></i></span>
+                        Building Details
                     </h3>
                     <div class="features-grid">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Age (AGE)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="65.0" step="0.1" min="0" required data-feature="AGE">
-                            <p class="text-xs text-gray-500 mt-1">Proportion of units built before 1940</p>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nitric Oxide (NOX) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 0.53" step="0.01" min="0" required data-feature="NOX">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Distance to Employment (DIS)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="5.0" step="0.1" min="0" required data-feature="DIS">
-                            <p class="text-xs text-gray-500 mt-1">Weighted distances to employment centers</p>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Avg Rooms (RM) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 6.5" step="0.1" min="0" required data-feature="RM">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Highway Access (RAD)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="10" step="1" min="0" required data-feature="RAD">
-                            <p class="text-xs text-gray-500 mt-1">Index of accessibility to highways</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Property Tax Rate (TAX)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="500" step="1" min="0" required data-feature="TAX">
-                            <p class="text-xs text-gray-500 mt-1">Full-value property tax rate per $10k</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Pupil-Teacher Ratio (PTRATIO)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="15" step="0.1" min="0" required data-feature="PTRATIO">
-                            <p class="text-xs text-gray-500 mt-1">Pupil-teacher ratio by town</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Black Population (B)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="350" step="0.1" min="0" required data-feature="B">
-                            <p class="text-xs text-gray-500 mt-1">Black population percentage scaled value</p>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Building Age (AGE) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 65.2" step="0.1" min="0" required data-feature="AGE">
                         </div>
                     </div>
                 </div>
 
-                <!-- Section 3: Socioeconomic -->
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-purple-500">
-                        <i class="fas fa-chart-pie text-purple-500 mr-2"></i>Socioeconomic Factors
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                        <span class="bg-purple-100 text-purple-600 p-2 rounded-lg border border-purple-200"><i class="fas fa-city"></i></span>
+                        City & Infrastructure
                     </h3>
                     <div class="features-grid">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Lower Status Population (LSTAT)
-                                <span class="text-blue-500">*</span>
-                            </label>
-                            <input type="number" class="input-field" placeholder="10.0" step="0.1" min="0" required data-feature="LSTAT">
-                            <p class="text-xs text-gray-500 mt-1">Lower status population percentage</p>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Distance to Employment (DIS) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 4.09" step="0.1" min="0" required data-feature="DIS">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Highway Access (RAD) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 1" step="1" min="0" required data-feature="RAD">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Tax Rate (TAX) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 296" step="1" min="0" required data-feature="TAX">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pupil-Teacher Ratio (PTRATIO) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 15.3" step="0.1" min="0" required data-feature="PTRATIO">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Black Population Index (B) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 396.9" step="0.1" min="0" required data-feature="B">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Lower Status Pop % (LSTAT) <span class="text-red-500">*</span></label>
+                            <input type="number" class="input-field" placeholder="e.g. 4.98" step="0.1" min="0" required data-feature="LSTAT">
                         </div>
                     </div>
                 </div>
 
-                <!-- Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-200">
-                    <button type="submit" class="btn-primary flex-1 justify-center">
-                        <i class="fas fa-brain"></i>
-                        <span>Predict Price</span>
+                <div class="flex flex-col sm:flex-row gap-6 pt-8 border-t border-gray-200">
+                    <button type="submit" class="doodle-btn flex-1">
+                        <i class="fas fa-magic"></i> Predict Price
                     </button>
-                    <button type="reset" class="btn-primary flex-1 justify-center" style="background: #6B7280; opacity: 0.8;">
-                        <i class="fas fa-redo"></i>
-                        <span>Reset Form</span>
+                    <button type="reset" class="doodle-btn doodle-btn-secondary flex-1">
+                        <i class="fas fa-eraser"></i> Clear Form
                     </button>
                 </div>
             </form>
 
-            <!-- Prediction Result Box -->
             <div class="prediction-box" id="predictionBox">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
-                    <i class="fas fa-home text-2xl"></i>
-                    <span>Estimated Property Value</span>
+                <div class="text-xl font-bold text-[#20BEFF] tracking-widest uppercase mb-2">
+                    <i class="fas fa-coins mr-2"></i> Estimated Value
                 </div>
                 <div class="prediction-value" id="predictionValue">$XXX,XXX</div>
-                <p class="text-sm opacity-90">Based on the provided housing characteristics</p>
-            </div>
-        </div>
-
-        <!-- Info Section -->
-        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="glass-effect card-hover p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">
-                    <i class="fas fa-info-circle text-blue-500 mr-2"></i>About This Model
-                </h3>
-                <ul class="space-y-2 text-gray-700 text-sm">
-                    <li><strong>Model Type:</strong> Linear Regression</li>
-                    <li><strong>Dataset:</strong> Boston Housing Dataset</li>
-                    <li><strong>Total Features:</strong> 13</li>
-                    <li><strong>Training Samples:</strong> 506</li>
-                    <li><strong>Price Range:</strong> $5k - $50k</li>
-                </ul>
-            </div>
-
-            <div class="glass-effect card-hover p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">
-                    <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Tips for Best Results
-                </h3>
-                <ul class="space-y-2 text-gray-700 text-sm">
-                    <li>✓ Fill all fields with realistic values</li>
-                    <li>✓ Crime rates typically range from 0.01 to 89</li>
-                    <li>✓ Room count usually between 4 and 9</li>
-                    <li>✓ Ages represented as percentage</li>
-                    <li>✓ All monetary values are in thousands</li>
-                </ul>
+                <p class="text-gray-300 font-medium">Calculated via Linear Regression Model</p>
             </div>
         </div>
     </div>
@@ -531,113 +410,67 @@
         const predictionValue = document.getElementById('predictionValue');
         const loadingOverlay = document.getElementById('loadingOverlay');
 
-        // Form submission
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Clear previous messages
             errorMessage.classList.remove('show');
             successMessage.classList.remove('show');
             predictionBox.classList.remove('show');
 
-            // Collect form data
-            const formData = new FormData(form);
             const data = {};
-            
-            document.querySelectorAll('[data-feature]').forEach(input => {
-                const feature = input.getAttribute('data-feature');
-                const value = input.value;
-                
-                if (!value) {
-                    showError(`${feature} is required`);
-                    throw new Error(`Missing ${feature}`);
-                }
-                
-                const numValue = parseFloat(value);
-                if (isNaN(numValue)) {
-                    showError(`${feature} must be a valid number`);
-                    throw new Error(`Invalid ${feature}`);
-                }
-                
-                data[feature] = numValue;
-            });
-
             try {
-                // Show loading overlay
+                document.querySelectorAll('[data-feature]').forEach(input => {
+                    const feature = input.getAttribute('data-feature');
+                    const value = input.value;
+                    
+                    if (!value) throw new Error(`${feature} is required`);
+                    
+                    const numValue = parseFloat(value);
+                    if (isNaN(numValue)) throw new Error(`Invalid number for ${feature}`);
+                    
+                    data[feature] = numValue;
+                });
+
                 loadingOverlay.classList.add('show');
 
-                // Send prediction request
+                // API Call
                 const response = await fetch('/api/predict', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ data })
                 });
 
                 const result = await response.json();
-
-                // Hide loading overlay
                 loadingOverlay.classList.remove('show');
 
                 if (result.success) {
-                    // Show success
                     successMessage.classList.add('show');
                     predictionValue.textContent = result.formatted_prediction;
                     predictionBox.classList.add('show');
                     
-                    // Scroll to result
                     setTimeout(() => {
-                        predictionBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        predictionBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }, 300);
                 } else {
                     showError(result.error || 'Prediction failed');
                 }
             } catch (error) {
                 loadingOverlay.classList.remove('show');
-                showError('Network error. Please try again.');
-                console.error('Error:', error);
+                showError(error.message || 'Network error. Please try again.');
             }
         });
 
         function showError(message) {
             errorText.textContent = message;
             errorMessage.classList.add('show');
-            setTimeout(() => {
-                errorMessage.classList.remove('show');
-            }, 5000);
+            setTimeout(() => { errorMessage.classList.remove('show'); }, 5000);
         }
 
-        // Reset form
         form.addEventListener('reset', () => {
             errorMessage.classList.remove('show');
             successMessage.classList.remove('show');
             predictionBox.classList.remove('show');
-        });
-
-        // Real-time input validation
-        document.querySelectorAll('[data-feature]').forEach(input => {
-            input.addEventListener('blur', function() {
-                if (this.type === 'number' && this.value) {
-                    const value = parseFloat(this.value);
-                    if (isNaN(value)) {
-                        this.classList.add('border-red-500');
-                    } else {
-                        this.classList.remove('border-red-500');
-                    }
-                }
-            });
-        });
-
-        // Fetch model info on page load
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const response = await fetch('/api/info');
-                const data = await response.json();
-                console.log('Model Info:', data);
-            } catch (error) {
-                console.error('Error fetching model info:', error);
-            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     </script>
 </body>

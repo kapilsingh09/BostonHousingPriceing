@@ -247,10 +247,10 @@
     </header>
 
     <div class="container mx-auto px-4 mt-8 text-center">
-        <div class="doodle-img-wrapper">
+        <div class="doodle-img-wrapper max-w-md w-full h-64 mx-auto">
             <img src="https://cataas.com/cat/says/Waiting%20for%20the%20ML%20model%20to%20train...?!fontSize=30&fontColor=white" 
                  alt="Programming Cat Meme" 
-                 class="w-full max-w-md h-auto object-cover block">
+                 class="w-full h-full object-cover block">
         </div>
     </div>
 
@@ -267,18 +267,69 @@
             <div class="kaggle-card p-6 text-center border-t-4 border-t-[#20BEFF]">
                 <div class="text-4xl font-bold text-gray-900 mb-1" style="font-family: 'Fuzzy Bubbles', cursive;">13</div>
                 <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Features</div>
+                <div class="text-xs text-gray-400 mt-1">Input variables used for prediction</div>
             </div>
             <div class="kaggle-card p-6 text-center border-t-4 border-t-[#FFD54F]">
-                <div class="text-4xl font-bold text-gray-900 mb-1" style="font-family: 'Fuzzy Bubbles', cursive;">50</div>
+                <div class="text-4xl font-bold text-gray-900 mb-1" style="font-family: 'Fuzzy Bubbles', cursive;">339</div>
                 <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Training Samples</div>
+                <div class="text-xs text-gray-400 mt-1">Split from 506 total samples (33% test size)</div>
             </div>
             <div class="kaggle-card p-6 text-center border-t-4 border-t-[#A8E6CF]">
-                <div class="text-4xl font-bold text-gray-900 mb-1" style="font-family: 'Fuzzy Bubbles', cursive;">72.2%</div>
-                <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Accuracy</div>
+                <div class="text-4xl font-bold text-gray-900 mb-1" style="font-family: 'Fuzzy Bubbles', cursive;">72.6%</div>
+                <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider">R² Score (Accuracy)</div>
+                <div class="text-xs text-gray-400 mt-1">MAE: 3.15 | MSE: 20.72 | RMSE: 4.55</div>
             </div>
         </div>
 
-        <div class="kaggle-card p-8 md:p-12 border-2 border-black shadow-[8px_8px_0px_#E0E4E8]">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <!-- Chief Scientist of the Project Card -->
+            <div class="kaggle-card p-6 border-2 border-black shadow-[8px_8px_0px_#E0E4E8] bg-white flex flex-col items-center text-center">
+                <div class="relative mb-3">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=250&h=250" 
+                         alt="Chief Scientist" 
+                         class="w-24 h-24 rounded-full border-4 border-black object-cover shadow-[4px_4px_0px_#20BEFF]">
+                    <span class="absolute bottom-0 right-1 bg-yellow-400 border border-black rounded-full w-6 h-6 flex items-center justify-center text-xs shadow-md">🐱</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900" style="font-family: 'Fuzzy Bubbles', cursive;">Dr. McWhiskers</h3>
+                <p class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-3">Chief Scientist</p>
+                
+                <div class="bg-blue-50 border-2 border-black p-3 rounded-xl relative mb-4 shadow-[3px_3px_0px_#20BEFF] text-left w-full text-xs">
+                    <p class="text-gray-800 font-medium leading-relaxed">
+                        "Meow! I've loaded a random housing profile into the inputs. Click <strong>Predict Price</strong> to run the model, or adjust the parameters yourself!"
+                    </p>
+                </div>
+
+                <!-- Highlight Specs Card -->
+                <div class="w-full text-left bg-gray-50 border-2 border-black rounded-lg p-3 space-y-2 mb-4">
+                    <h4 class="font-bold text-[10px] text-gray-400 uppercase tracking-wider mb-1"><i class="fas fa-star mr-1 text-[#20BEFF]"></i> Key Sample Specs</h4>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-white p-2 border border-gray-200 rounded">
+                            <span class="block text-[9px] text-gray-400 font-bold">ROOMS (RM)</span>
+                            <span id="sci-RM" class="font-mono text-sm text-gray-900 font-bold">-</span>
+                        </div>
+                        <div class="bg-white p-2 border border-gray-200 rounded">
+                            <span class="block text-[9px] text-gray-400 font-bold">CRIME (CRIM)</span>
+                            <span id="sci-CRIM" class="font-mono text-sm text-gray-900 font-bold">-</span>
+                        </div>
+                        <div class="bg-white p-2 border border-gray-200 rounded">
+                            <span class="block text-[9px] text-gray-400 font-bold">POVERTY (LSTAT)</span>
+                            <span id="sci-LSTAT" class="font-mono text-sm text-gray-900 font-bold">-</span>
+                        </div>
+                        <div class="bg-white p-2 border border-gray-200 rounded">
+                            <span class="block text-[9px] text-gray-400 font-bold">SCHOOLS (PTRATIO)</span>
+                            <span id="sci-PTRATIO" class="font-mono text-sm text-gray-900 font-bold">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Load Another Sample Button -->
+                <button type="button" onclick="loadRandomSample()" class="w-full text-xs bg-yellow-400 hover:bg-yellow-500 text-black border-2 border-black font-bold py-2 px-3 rounded-lg shadow-[2px_2px_0px_#000] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#000] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-1">
+                    <i class="fas fa-random text-[10px]"></i> Fetch Another Sample
+                </button>
+            </div>
+
+            <!-- Prediction Form Card -->
+            <div class="lg:col-span-2 kaggle-card p-8 md:p-12 border-2 border-black shadow-[8px_8px_0px_#E0E4E8]">
             
             <div class="alert-box error-message" id="errorMessage">
                 <i class="fas fa-exclamation-triangle mr-2"></i>
@@ -391,7 +442,15 @@
                 </div>
             </form>
 
-            <div class="prediction-box" id="predictionBox">
+            <div class="prediction-box text-center p-6 rounded-xl border-4" id="predictionBox">
+                <div class="flex flex-col items-center justify-center mb-6">
+                    <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-black mb-4 shadow-[4px_4px_0px_#20BEFF]">
+                        <img id="predictionCatImg" src="" alt="Prediction Cat" class="w-full h-full object-cover">
+                    </div>
+                    <div id="predictionCatSpeech" class="bg-gray-800 border-2 border-gray-700 text-white p-4 rounded-xl text-sm max-w-md font-medium tracking-wide text-left relative shadow-md">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
                 <div class="text-xl font-bold text-[#20BEFF] tracking-widest uppercase mb-2">
                     <i class="fas fa-coins mr-2"></i> Estimated Value
                 </div>
@@ -399,7 +458,118 @@
                 <p class="text-gray-300 font-medium">Calculated via Linear Regression Model</p>
             </div>
         </div>
+        </div> <!-- Grid container close -->
+    </div> <!-- Outer container close -->
+
+    <!-- Feature Guide Section -->
+    <div class="container mx-auto px-4 md:px-6 py-12 mt-12 border-t-2 border-dashed border-gray-300">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center font-['Fuzzy_Bubbles']" style="font-family: 'Fuzzy Bubbles', cursive;">
+            <i class="fas fa-book-open text-[#20BEFF] mr-2"></i> Boston Dataset Feature Guide
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Left Div: Geography & Environment Features -->
+            <div class="kaggle-card p-6 border-2 border-black shadow-[6px_6px_0px_#20BEFF] bg-white">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-100 flex items-center gap-2">
+                    <span class="bg-blue-100 text-[#20BEFF] p-2 rounded-lg text-sm"><i class="fas fa-map-marker-alt"></i></span>
+                    Geography & Demographics
+                </h3>
+                <ul class="space-y-4 text-sm text-gray-700">
+                    <li>
+                        <strong class="font-mono text-blue-500 font-semibold bg-gray-50 px-2 py-1 rounded border">CRIM</strong>
+                        <span class="ml-2 font-medium">Per capita crime rate by town. Tells us the neighborhood's general safety index.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-blue-500 font-semibold bg-gray-50 px-2 py-1 rounded border">ZN</strong>
+                        <span class="ml-2 font-medium">Proportion of residential land zoned for large lots (over 25,000 sq.ft.). High values mean spacious suburban areas.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-blue-500 font-semibold bg-gray-50 px-2 py-1 rounded border">INDUS</strong>
+                        <span class="ml-2 font-medium">Proportion of non-retail business acres per town. Measures proximity to industrial zones.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-blue-500 font-semibold bg-gray-50 px-2 py-1 rounded border">CHAS</strong>
+                        <span class="ml-2 font-medium">Charles River bounds indicator. 1 if the property tract touches the river, 0 otherwise (premium view!).</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-blue-500 font-semibold bg-gray-50 px-2 py-1 rounded border">B</strong>
+                        <span class="ml-2 font-medium">Demographic ratio indicator. A statistical measure based on historical Black population density.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-blue-500 font-semibold bg-gray-50 px-2 py-1 rounded border">LSTAT</strong>
+                        <span class="ml-2 font-medium">Percentage of lower status population in the area. Strongly correlated with lower overall property prices.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right Div: Housing, Infrastructure & Tax Features -->
+            <div class="kaggle-card p-6 border-2 border-black shadow-[6px_6px_0px_#FFD54F] bg-white">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-100 flex items-center gap-2">
+                    <span class="bg-yellow-100 text-yellow-600 p-2 rounded-lg text-sm"><i class="fas fa-building"></i></span>
+                    Housing & Infrastructure
+                </h3>
+                <ul class="space-y-4 text-sm text-gray-700">
+                    <li>
+                        <strong class="font-mono text-yellow-600 font-semibold bg-gray-50 px-2 py-1 rounded border">NOX</strong>
+                        <span class="ml-2 font-medium">Nitric oxides concentration (parts per 10 million). Indicates local air quality and traffic congestion.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-yellow-600 font-semibold bg-gray-50 px-2 py-1 rounded border">RM</strong>
+                        <span class="ml-2 font-medium">Average number of rooms per dwelling. One of the strongest indicators of luxury and size.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-yellow-600 font-semibold bg-gray-50 px-2 py-1 rounded border">AGE</strong>
+                        <span class="ml-2 font-medium">Proportion of owner-occupied units built prior to 1940. Measures historical and structural age of the neighborhood.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-yellow-600 font-semibold bg-gray-50 px-2 py-1 rounded border">DIS</strong>
+                        <span class="ml-2 font-medium">Weighted distances to five Boston employment centers. Connects accessibility to jobs.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-yellow-600 font-semibold bg-gray-50 px-2 py-1 rounded border">RAD</strong>
+                        <span class="ml-2 font-medium">Index of accessibility to radial highways. Indicates travel ease to downtown Boston.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-yellow-600 font-semibold bg-gray-50 px-2 py-1 rounded border">TAX</strong>
+                        <span class="ml-2 font-medium">Full-value property-tax rate per $10,000. Higher rates fund better local municipal infrastructure.</span>
+                    </li>
+                    <li>
+                        <strong class="font-mono text-yellow-600 font-semibold bg-gray-50 px-2 py-1 rounded border">PTRATIO</strong>
+                        <span class="ml-2 font-medium">Pupil-teacher ratio by town. Reflects quality of local schooling and school resources.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 border-t-4 border-black text-gray-400 mt-16 py-12 font-['Inter']">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-gray-800 pb-8 mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-[#20BEFF] rounded-full flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#FFF]">
+                        <i class="fas fa-home text-black text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="text-white text-lg font-bold">Boston Housing Price Prediction</span>
+                        <p class="text-xs text-gray-500 font-medium">Linear Regression Machine Learning Project</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <a href="https://github.com/kapilsingh09/BostonHousingPriceing" target="_blank" class="flex items-center gap-2 bg-gray-800 text-white hover:bg-gray-700 transition px-4 py-2 rounded-lg border border-gray-700 font-medium text-sm">
+                        <i class="fab fa-github text-lg"></i> GitHub Repository
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs font-medium text-gray-500 gap-4">
+                <p>&copy; 2026 Boston Housing Price prediction. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <span class="hover:text-gray-300 cursor-pointer">Model: sklearn.linear_model.LinearRegression</span>
+                    <span class="hover:text-gray-300 cursor-pointer">Dataset Source: Boston Housing Dataset</span>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script>
         const form = document.getElementById('predictionForm');
@@ -409,6 +579,39 @@
         const predictionBox = document.getElementById('predictionBox');
         const predictionValue = document.getElementById('predictionValue');
         const loadingOverlay = document.getElementById('loadingOverlay');
+
+        // Predefined authentic Boston Housing dataset samples (moderate/standard values)
+        const SAMPLES = [
+            {"CRIM":0.09178,"ZN":0.0,"INDUS":4.05,"CHAS":0,"NOX":0.51,"RM":6.416,"AGE":84.1,"DIS":2.6463,"RAD":5,"TAX":296,"PTRATIO":16.6,"B":395.5,"LSTAT":9.04,"PRICE":23.6},
+            {"CRIM":0.05644,"ZN":12.5,"INDUS":6.41,"CHAS":0,"NOX":0.447,"RM":6.208,"AGE":32.9,"DIS":4.0776,"RAD":4,"TAX":254,"PTRATIO":17.6,"B":396.9,"LSTAT":6.53,"PRICE":24.2},
+            {"CRIM":0.10574,"ZN":0.0,"INDUS":10.81,"CHAS":0,"NOX":0.413,"RM":6.065,"AGE":38.8,"DIS":4.8681,"RAD":4,"TAX":305,"PTRATIO":19.2,"B":390.91,"LSTAT":11.07,"PRICE":21.8},
+            {"CRIM":0.09164,"ZN":0.0,"INDUS":8.14,"CHAS":0,"NOX":0.538,"RM":5.983,"AGE":61.1,"DIS":3.9986,"RAD":4,"TAX":307,"PTRATIO":18.4,"B":391.4,"LSTAT":12.33,"PRICE":20.5},
+            {"CRIM":0.1503,"ZN":0.0,"INDUS":9.69,"CHAS":0,"NOX":0.585,"RM":6.174,"AGE":74.5,"DIS":3.0522,"RAD":5,"TAX":311,"PTRATIO":18.7,"B":385.09,"LSTAT":13.97,"PRICE":19.2}
+        ];
+
+        // Load dynamic random sample to prefill form and chief scientist profile
+        function loadRandomSample() {
+            const sample = SAMPLES[Math.floor(Math.random() * SAMPLES.length)];
+            
+            // Prefill inputs
+            document.querySelectorAll('[data-feature]').forEach(input => {
+                const feature = input.getAttribute('data-feature');
+                if (sample.hasOwnProperty(feature)) {
+                    input.value = sample[feature];
+                }
+            });
+            
+            // Update values on Chief Scientist card
+            for (const feature in sample) {
+                if (feature !== 'PRICE') {
+                    const cell = document.getElementById(`sci-${feature}`);
+                    if (cell) cell.textContent = sample[feature];
+                }
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', loadRandomSample);
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -446,6 +649,25 @@
                 if (result.success) {
                     successMessage.classList.add('show');
                     predictionValue.textContent = result.formatted_prediction;
+                    
+                    const catImg = document.getElementById('predictionCatImg');
+                    const catSpeech = document.getElementById('predictionCatSpeech');
+                    const val = result.prediction;
+                    
+                    if (val >= 22.0) {
+                        // High/Good value cat
+                        catImg.src = "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&q=80&w=300&h=300";
+                        catSpeech.innerHTML = `<strong>Dr. McWhiskers says:</strong> "Meow-velous! 😻 A prediction of <strong>$${val.toFixed(2)}k</strong>! That's a premium high-value property. Time to invest in more premium catnip!"`;
+                        predictionBox.style.borderColor = "#A8E6CF";
+                        predictionBox.style.boxShadow = "8px 8px 0px #A8E6CF";
+                    } else {
+                        // Low/Bad value cat
+                        catImg.src = "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&q=80&w=300&h=300";
+                        catSpeech.innerHTML = `<strong>Dr. McWhiskers says:</strong> "Hiss... 😾 Only <strong>$${val.toFixed(2)}k</strong>? This budget property looks a bit run-down. Not even a cardboard box here is worth that!"`;
+                        predictionBox.style.borderColor = "#FFA8A8";
+                        predictionBox.style.boxShadow = "8px 8px 0px #FFA8A8";
+                    }
+                    
                     predictionBox.classList.add('show');
                     
                     setTimeout(() => {
@@ -470,6 +692,10 @@
             errorMessage.classList.remove('show');
             successMessage.classList.remove('show');
             predictionBox.classList.remove('show');
+            
+            // Reload a new random sample with a small delay so reset form finishes clearing
+            setTimeout(loadRandomSample, 50);
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     </script>
